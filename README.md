@@ -113,3 +113,4 @@ futura/
   package.json
   pnpm-workspace.yaml
   README.md
+```

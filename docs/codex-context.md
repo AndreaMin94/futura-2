@@ -2264,7 +2264,7 @@ apps/web/src/
 Le chiamate fetch autenticate devono usare:
 
 ```ts
-credentials: 'include'
+credentials: 'include';
 ```
 
 ---
