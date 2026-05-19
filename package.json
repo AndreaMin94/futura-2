@@ -1,0 +1,25 @@
+{
+  "name": "futura",
+  "version": "1.0.0",
+  "description": "Personal finance web app built with React, TypeScript, NestJS, PostgreSQL and Prisma.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "personal-finance",
+    "finance",
+    "budgeting",
+    "react",
+    "typescript",
+    "nestjs",
+    "fastify",
+    "postgresql",
+    "prisma",
+    "pnpm",
+    "monorepo"
+  ],
+  "author": "Andrea Mininni mininniandrea@gmail.com",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@10.29.3"
+}
