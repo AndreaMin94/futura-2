@@ -14,6 +14,12 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
+  packages/shared:
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+
 packages:
 
   typescript@5.9.3:
