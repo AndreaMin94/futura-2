@@ -6,6 +6,6 @@ export {
   isSameCurrency,
   parseMoney,
   serializeMoney,
-} from './money.ts';
+} from './money.js';
 
-export type { Currency, Money, SerializedMoney } from './money.ts';
+export type { Currency, Money, SerializedMoney } from './money.js';

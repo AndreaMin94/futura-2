@@ -5,9 +5,7 @@
     "moduleResolution": "NodeNext",
     "outDir": "dist",
     "rootDir": "src",
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": true
+    "declaration": true
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts"]

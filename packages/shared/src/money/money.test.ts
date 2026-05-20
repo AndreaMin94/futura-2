@@ -13,11 +13,10 @@ describe('money', () => {
 
   it('uses EUR as the default currency', () => {
     const money = createMoney(500n);
-    console.log(money);
     expect(money.currency).toBe('EUR');
   });
 
-  it('adds money wirh the same currency', () => {
+  it('adds money with the same currency', () => {
     const result = addMoney(createMoney(1234n), createMoney(66n));
     expect(result).toEqual({
       amountMinor: 1300n,
