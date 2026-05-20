@@ -19,6 +19,7 @@ Al momento la repository contiene:
 - configurazione TypeScript condivisa;
 - money value object condiviso in `@futura/shared`;
 - API foundation con NestJS e Fastify adapter;
+- configurazione API minima tramite `API_PORT`;
 - endpoint `GET /health`;
 - frontend scaffoldato con Next.js;
 - Prettier configurato a livello root.
@@ -140,6 +141,24 @@ Avvia solo il frontend:
 pnpm --filter @futura/web dev
 ```
 
+Avvia solo l'API:
+
+```bash
+pnpm --filter @futura/api dev
+```
+
+Configurazione locale minima:
+
+```bash
+cp .env.example .env
+```
+
+Variabile disponibile:
+
+```env
+API_PORT=3000
+```
+
 ## Comandi principali
 
 Build di tutti i workspace:
@@ -170,6 +189,12 @@ Test di tutti i workspace, quando presenti:
 
 ```bash
 pnpm test
+```
+
+Controllo completo locale:
+
+```bash
+pnpm check
 ```
 
 ## Principi tecnici
