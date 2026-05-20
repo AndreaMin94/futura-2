@@ -55,18 +55,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Esegue tutti i controlli disponibili oggi nel progetto:
-      # - test e build del package shared;
-      # - test di tutti i workspace;
-      # - build di tutti i workspace;
-      # - lint;
-      # - controllo Prettier.
-      #
-      # Quando aggiungeremo database e Prisma, questa pipeline potra' essere estesa
-      # con PostgreSQL service, Prisma generate e Prisma migrate deploy.
-      - name: Run project checks
-        run: pnpm check
-
       # Stampa le versioni effettive usate dalla VM di CI.
       # Serve per fare debug rapido se un errore dipende da Node.js o pnpm.
       - name: Print tool versions
@@ -78,6 +66,26 @@ jobs:
       # E' un controllo leggero utile per intercettare problemi di workspace.
       - name: List workspace packages
         run: pnpm list -r --depth -1
+
+      # Esegue i test di tutti i workspace che espongono uno script test.
+      # Al momento copre il package shared e il money value object.
+      - name: Run tests
+        run: pnpm test
+
+      # Compila tutti i workspace che espongono uno script build.
+      # Verifica TypeScript, shared package runtime output e build Next.js.
+      - name: Build workspaces
+        run: pnpm build
+
+      # Esegue il lint dei workspace che espongono uno script lint.
+      # Al momento il controllo principale e' sul frontend Next.js.
+      - name: Lint workspaces
+        run: pnpm lint
+
+      # Controlla che i file tracciati rispettino Prettier.
+      # Non modifica file: in CI deve solo fallire se qualcosa non e' formattato.
+      - name: Check formatting
+        run: pnpm format:check
 
       # Controlla vulnerabilita' note nelle dipendenze.
       # Per ora non blocca la pipeline: segnala problemi, ma lascia proseguire la CI.
