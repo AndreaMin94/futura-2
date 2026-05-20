@@ -18,6 +18,8 @@ Al momento la repository contiene:
 - workspace `packages/shared`;
 - configurazione TypeScript condivisa;
 - money value object condiviso in `@futura/shared`;
+- API foundation con NestJS e Fastify adapter;
+- endpoint `GET /health`;
 - frontend scaffoldato con Next.js;
 - Prettier configurato a livello root.
 
@@ -28,13 +30,13 @@ Non sono ancora presenti:
 - database;
 - Prisma;
 - Docker;
-- API HTTP reale;
 - integrazione tra frontend e backend.
 
 ## Stack attuale
 
 - pnpm workspace
 - TypeScript
+- NestJS con Fastify adapter per `apps/api`
 - Next.js per `apps/web`
 - React
 - Tailwind CSS
@@ -93,6 +95,8 @@ futura/
   apps/
     api/
       src/
+      package.json
+      tsconfig.json
 
     web/
       src/
