@@ -9,5 +9,5 @@
     "emitDecoratorMetadata": true,
     "types": ["node"]
   },
-  "include": ["src"]
+  "include": ["src", "tsconfig.build.json"],
 }

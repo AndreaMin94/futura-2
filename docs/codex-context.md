@@ -83,6 +83,8 @@ Stato attuale:
 - API foundation con NestJS e Fastify adapter in `apps/api`;
 - configurazione API minima tramite `API_PORT`;
 - endpoint `GET /health`;
+- PostgreSQL locale configurato via Docker Compose;
+- Docker Compose project name: `futura`;
 - foundation TypeScript minima per `packages/shared`;
 - money value object condiviso in `@futura/shared`;
 - frontend scaffoldato con Next.js in `apps/web`;
@@ -110,6 +112,7 @@ pnpm-lock.yaml
 .prettierrc
 .prettierignore
 .env.example
+Docker/docker-compose.yml
 tsconfig.base.json
 docs/codex-context.md
 ```
@@ -137,6 +140,9 @@ futura/
       tsconfig.json
 
   docs/
+
+  Docker/
+    docker-compose.yml
 
   package.json
   pnpm-workspace.yaml
@@ -492,12 +498,19 @@ Criteri:
 
 Obiettivo: collegare PostgreSQL e Prisma.
 
-Task:
+Stato: in corso.
 
-- creare `docker-compose.yml`;
+Task completati:
+
+- creare `Docker/docker-compose.yml`;
 - configurare PostgreSQL locale;
 - usare porta host `5433`;
+- usare database locale `futura`;
+- impostare Docker Compose project name `futura`;
 - aggiungere `.env.example`;
+
+Task ancora da fare:
+
 - configurare Prisma;
 - creare `PrismaService`;
 - preparare prima migration.
@@ -505,9 +518,9 @@ Task:
 Criteri:
 
 - database avviabile via Docker;
-- Prisma configurato;
-- client generabile;
-- connessione testata;
+- Prisma configurato quando verrà introdotto;
+- client generabile quando Prisma verrà introdotto;
+- connessione testata quando l'API avrà un layer database;
 - `.env` non committato.
 
 ---

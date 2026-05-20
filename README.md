@@ -21,6 +21,7 @@ Al momento la repository contiene:
 - API foundation con NestJS e Fastify adapter;
 - configurazione API minima tramite `API_PORT`;
 - endpoint `GET /health`;
+- PostgreSQL locale via Docker Compose;
 - frontend scaffoldato con Next.js;
 - Prettier configurato a livello root.
 
@@ -28,9 +29,8 @@ Non sono ancora presenti:
 
 - funzionalità applicative di dominio;
 - autenticazione;
-- database;
+- integrazione database nell'API;
 - Prisma;
-- Docker;
 - integrazione tra frontend e backend.
 
 ## Stack attuale
@@ -38,6 +38,7 @@ Non sono ancora presenti:
 - pnpm workspace
 - TypeScript
 - NestJS con Fastify adapter per `apps/api`
+- PostgreSQL locale via Docker Compose
 - Next.js per `apps/web`
 - React
 - Tailwind CSS
@@ -108,6 +109,9 @@ futura/
 
   docs/
 
+  Docker/
+    docker-compose.yml
+
   package.json
   pnpm-workspace.yaml
   tsconfig.base.json
@@ -157,7 +161,32 @@ Variabile disponibile:
 
 ```env
 API_PORT=3000
+POSTGRES_DB=futura
+POSTGRES_USER=futura
+POSTGRES_PASSWORD=futura_dev_password
+POSTGRES_PORT=5433
+DATABASE_URL=postgresql://futura:futura_dev_password@localhost:5433/futura?schema=public
 ```
+
+Avvia PostgreSQL locale:
+
+```bash
+docker compose -f Docker/docker-compose.yml up -d postgres
+```
+
+Ferma PostgreSQL locale:
+
+```bash
+docker compose -f Docker/docker-compose.yml down
+```
+
+Se devi reinizializzare il database locale e cancellare il volume:
+
+```bash
+docker compose -f Docker/docker-compose.yml down -v
+```
+
+Lo stack Docker Compose usa il project name `futura`, così Docker Desktop mostra lo stack con il nome del progetto.
 
 ## Comandi principali
 
