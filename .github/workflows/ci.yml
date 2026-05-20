@@ -1,0 +1,68 @@
+name: Futura CI
+
+# Decide quando GitHub Actions deve eseguire questa pipeline.
+# In questo caso la CI parte:
+# - manualmente, tramite workflow_dispatch;
+# - quando apri o aggiorni una pull request verso main o develop;
+# - a ogni push su qualsiasi branch, inclusi i merge commit su develop e main.
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main, develop]
+  push:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: read
+
+# Un workflow puo' contenere uno o piu' job.
+# Ogni job e' un insieme di step eseguiti su una macchina virtuale.
+jobs:
+  project-checks:
+    # Nome leggibile del job mostrato nell'interfaccia di GitHub Actions.
+    name: Project checks
+
+    # Dice a GitHub di eseguire questo job su una VM Linux Ubuntu gestita da GitHub.
+    runs-on: ubuntu-latest
+
+    # Per ora non avviamo services Docker.
+    # PostgreSQL, Prisma generate e migration verranno aggiunti quando esistera'
+    # la foundation database/API.
+
+    # Lista ordinata degli step del job.
+    # Se uno step fallisce, GitHub marca il job come fallito e non prosegue.
+    steps:
+      # Scarica il repository nella VM, cosi' gli step successivi possono leggere il codice.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Installa pnpm nella VM usando la versione dichiarata nel package.json root.
+      # Il progetto usa pnpm come package manager del monorepo.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      # Installa Node.js e abilita la cache pnpm per rendere le installazioni piu' veloci.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      # Installa tutte le dipendenze rispettando esattamente il lockfile.
+      # --frozen-lockfile fa fallire la CI se package.json e lockfile non sono allineati.
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Esegue tutti i controlli disponibili oggi nel progetto:
+      # - test e build del package shared;
+      # - test di tutti i workspace;
+      # - build di tutti i workspace;
+      # - lint;
+      # - controllo Prettier.
+      #
+      # Quando aggiungeremo database e Prisma, questa pipeline potra' essere estesa
+      # con PostgreSQL service, Prisma generate e Prisma migrate deploy.
+      - name: Run project checks
+        run: pnpm check
