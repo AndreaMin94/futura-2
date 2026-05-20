@@ -80,14 +80,15 @@ Stato attuale:
 - workspace `apps/web` creato;
 - workspace `packages/shared` creato;
 - configurazione TypeScript condivisa tramite `tsconfig.base.json`;
-- foundation TypeScript minima per `apps/api`;
+- API foundation con NestJS e Fastify adapter in `apps/api`;
+- endpoint `GET /health`;
 - foundation TypeScript minima per `packages/shared`;
 - money value object condiviso in `@futura/shared`;
 - frontend scaffoldato con Next.js in `apps/web`;
 - Prettier configurato a livello root;
 - README aggiornato con setup locale e stato del progetto.
 
-Non assumere che backend applicativo, database, Prisma, CI o auth siano già implementati.
+Non assumere che database, Prisma o auth siano già implementati.
 
 Prima di modificare qualsiasi cosa:
 
@@ -427,7 +428,7 @@ Criteri:
 
 Obiettivo: rendere reali i workspace senza introdurre dominio.
 
-Stato: in corso.
+Stato: completata.
 
 Task:
 
@@ -455,16 +456,21 @@ Criteri:
 
 Obiettivo: creare backend NestJS + Fastify.
 
-Task:
+Stato: in corso.
+
+Task completati:
 
 - creare app NestJS in `apps/api`;
 - configurare Fastify;
 - configurare TypeScript;
-- aggiungere endpoint root;
 - aggiungere endpoint health;
-- configurare lint;
 - configurare build;
 - configurare test;
+
+Task ancora da fare:
+
+- aggiungere endpoint root, se utile;
+- configurare lint dedicato API;
 - esporre script root per avvio API.
 
 Criteri:
