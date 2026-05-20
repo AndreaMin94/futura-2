@@ -1,29 +1,182 @@
 # Futura
 
-**Futura** è una webapp di finanza personale progettata per aiutare l’utente a capire, prevedere e migliorare la propria situazione economica.
+**Futura** è una webapp di finanza personale progettata per aiutare l'utente a capire, prevedere e migliorare la propria situazione economica.
 
-L’obiettivo non è costruire una semplice applicazione per registrare spese, ma un vero **financial command center personale**, capace di trasformare dati finanziari grezzi in decisioni pratiche.
+L'obiettivo non è costruire una semplice applicazione per registrare spese, ma un **financial command center personale**, capace di trasformare dati finanziari grezzi in decisioni pratiche.
 
 > La tua finanza personale, prima che accada.
 
----
+## Stato attuale
 
-## Obiettivo del progetto
+Il progetto è nella fase iniziale di bootstrap.
 
-Futura nasce per rispondere a domande concrete come:
+Al momento la repository contiene:
 
-- Quanto sto spendendo realmente ogni mese?
-- Quali spese sono fisse, variabili o discrezionali?
-- Quanto riuscirò a risparmiare nei prossimi mesi?
-- Posso permettermi una determinata spesa?
-- Quali abbonamenti o costi ricorrenti stanno pesando sul mio budget?
-- Sto andando nella direzione giusta rispetto ai miei obiettivi finanziari?
+- monorepo pnpm;
+- workspace `apps/api`;
+- workspace `apps/web`;
+- workspace `packages/shared`;
+- configurazione TypeScript condivisa;
+- money value object condiviso in `@futura/shared`;
+- frontend scaffoldato con Next.js;
+- Prettier configurato a livello root.
 
-Il focus principale è:
+Non sono ancora presenti:
 
-**prevedere, decidere e prevenire problemi**, non solo mostrare grafici sul passato.
+- funzionalità applicative di dominio;
+- autenticazione;
+- database;
+- Prisma;
+- Docker;
+- API HTTP reale;
+- integrazione tra frontend e backend.
 
----
+## Stack attuale
+
+- pnpm workspace
+- TypeScript
+- Next.js per `apps/web`
+- React
+- Tailwind CSS
+- Prettier
+
+## Dominio condiviso
+
+Il package `@futura/shared` contiene le primitive di dominio che devono restare coerenti tra backend e frontend.
+
+La prima primitiva disponibile è `Money`:
+
+- gli importi sono rappresentati in minor units, ad esempio `12,34 EUR -> 1234`;
+- il runtime TypeScript usa `bigint` per evitare errori floating point;
+- i payload JSON usano stringhe per `amountMinor`, perché JSON non supporta `bigint`;
+- le valute attualmente supportate sono `EUR`, `GBP` e `USD`;
+- non sono previste conversioni tra valute senza un tasso esplicito.
+
+## Stack previsto
+
+### Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- React Hook Form
+- Zod
+- TanStack Query
+- Fetch API con cookie httpOnly
+
+### Backend
+
+- Node.js
+- NestJS
+- Fastify
+- TypeScript
+- PostgreSQL
+- Prisma
+- JWT
+- Cookie httpOnly
+- Argon2
+
+### Qualità e delivery
+
+- lint
+- build
+- test
+- Docker Compose
+- GitHub Actions
+- Conventional Commits
+
+## Struttura repository
+
+```txt
+futura/
+  apps/
+    api/
+      src/
+
+    web/
+      src/
+
+  packages/
+    shared/
+      src/
+
+  docs/
+
+  package.json
+  pnpm-workspace.yaml
+  tsconfig.base.json
+  README.md
+```
+
+## Prerequisiti
+
+- Node.js
+- pnpm
+
+La versione pnpm attesa è indicata nel `package.json` root tramite `packageManager`.
+
+## Setup locale
+
+Installa le dipendenze:
+
+```bash
+pnpm install
+```
+
+Avvia i workspace in modalità sviluppo, dove disponibile:
+
+```bash
+pnpm dev
+```
+
+Avvia solo il frontend:
+
+```bash
+pnpm --filter @futura/web dev
+```
+
+## Comandi principali
+
+Build di tutti i workspace:
+
+```bash
+pnpm build
+```
+
+Lint di tutti i workspace:
+
+```bash
+pnpm lint
+```
+
+Formatta la repository:
+
+```bash
+pnpm format
+```
+
+Controlla la formattazione:
+
+```bash
+pnpm format:check
+```
+
+Test di tutti i workspace, quando presenti:
+
+```bash
+pnpm test
+```
+
+## Principi tecnici
+
+- modifiche piccole e verificabili;
+- nessun secret committato;
+- nessun file `.env` committato;
+- niente astrazioni premature;
+- niente dominio prima di avere una base stabile;
+- import da package condivisi tramite workspace, ad esempio `@futura/shared`;
+- Conventional Commits.
 
 ## Visione prodotto
 
@@ -43,73 +196,6 @@ Futura dovrà evolvere progressivamente in una piattaforma capace di:
 - integrare in futuro open banking;
 - introdurre funzionalità AI controllate e verificabili.
 
----
+Il focus principale è:
 
-## Stack tecnico previsto
-
-### Frontend
-
-- React
-- Vite
-- TypeScript
-- React Router
-- Tailwind CSS
-- React Hook Form
-- Zod
-- TanStack Query
-- Fetch API con cookie httpOnly
-
-### Backend
-
-- Node.js
-- NestJS
-- Fastify
-- TypeScript
-- PostgreSQL
-- Prisma
-- JWT
-- Cookie httpOnly
-- Argon2
-
-### Monorepo
-
-- pnpm workspace
-- struttura `apps/*` e `packages/*`
-
-### DevOps e qualità
-
-- Docker
-- Docker Compose
-- GitHub Actions
-- lint
-- build
-- test
-- branch protection
-- Conventional Commits
-
----
-
-## Struttura prevista della repository
-
-```txt
-futura/
-  apps/
-    api/
-      prisma/
-      src/
-
-    web/
-      src/
-
-  packages/
-    shared/
-
-  docs/
-
-  .github/
-    workflows/
-
-  docker-compose.yml
-  package.json
-  pnpm-workspace.yaml
-  README.md
+**prevedere, decidere e prevenire problemi**, non solo mostrare grafici sul passato.

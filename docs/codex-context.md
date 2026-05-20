@@ -71,11 +71,23 @@ Ogni scelta tecnica dovrebbe essere spiegabile rispondendo a domande come:
 
 ## 3. Stato attuale del progetto
 
-La repository è appena stata creata.
+La repository è nella fase iniziale di bootstrap, ma la base monorepo è già stata avviata.
 
-Il progetto deve partire da zero.
+Stato attuale:
 
-Non assumere che backend, frontend, Docker, Prisma, CI o auth siano già implementati.
+- monorepo pnpm configurato;
+- workspace `apps/api` creato;
+- workspace `apps/web` creato;
+- workspace `packages/shared` creato;
+- configurazione TypeScript condivisa tramite `tsconfig.base.json`;
+- foundation TypeScript minima per `apps/api`;
+- foundation TypeScript minima per `packages/shared`;
+- money value object condiviso in `@futura/shared`;
+- frontend scaffoldato con Next.js in `apps/web`;
+- Prettier configurato a livello root;
+- README aggiornato con setup locale e stato del progetto.
+
+Non assumere che backend applicativo, database, Prisma, CI o auth siano già implementati.
 
 Prima di modificare qualsiasi cosa:
 
@@ -85,13 +97,17 @@ Prima di modificare qualsiasi cosa:
 4. proporre un piano breve;
 5. applicare modifiche piccole e verificabili.
 
-File iniziali attesi:
+File principali attuali:
 
 ```txt
 README.md
 package.json
 pnpm-workspace.yaml
+pnpm-lock.yaml
 .gitignore
+.prettierrc
+.prettierignore
+tsconfig.base.json
 docs/codex-context.md
 ```
 
@@ -101,19 +117,26 @@ Struttura monorepo target:
 futura/
   apps/
     api/
+      src/
+      package.json
+      tsconfig.json
+
     web/
+      src/
+      package.json
+      tsconfig.json
 
   packages/
     shared/
+      src/
+      package.json
+      tsconfig.json
 
   docs/
 
-  .github/
-    workflows/
-
-  docker-compose.yml
   package.json
   pnpm-workspace.yaml
+  tsconfig.base.json
   README.md
 ```
 
@@ -150,10 +173,9 @@ futura/
 
 ### Frontend
 
+- Next.js
 - React
-- Vite
 - TypeScript
-- React Router
 - Tailwind CSS
 - React Hook Form
 - Zod
@@ -209,7 +231,7 @@ Preferenza tecnica:
 
 ```txt
 amountMinor: BigInt
-currency: EUR
+currency: EUR | GBP | USD
 ```
 
 Esempio:
@@ -223,6 +245,14 @@ Motivazione:
 - evitare errori floating point;
 - mantenere coerenza nei calcoli;
 - semplificare aggregazioni e report.
+
+Regole attuali:
+
+- il runtime TypeScript usa `bigint`;
+- i payload JSON usano stringhe per `amountMinor`, perché JSON non supporta `bigint`;
+- backend e frontend devono condividere la stessa rappresentazione tramite `@futura/shared`;
+- `parseMoney` deve validare i dati JSON esterni prima di usarli come dati di dominio;
+- non fare conversioni tra valute senza un tasso di cambio esplicito.
 
 Ogni eventuale semplificazione con `number`/`Float` deve essere esplicitamente motivata e documentata.
 
@@ -370,7 +400,9 @@ Linee guida:
 
 Obiettivo: creare una base monorepo pulita.
 
-Task:
+Stato: completata.
+
+Task completati:
 
 - verificare `package.json`;
 - verificare `pnpm-workspace.yaml`;
@@ -379,7 +411,8 @@ Task:
 - aggiungere script root minimi;
 - aggiungere README;
 - aggiungere contesto Codex;
-- primo commit pulito.
+- configurare Prettier;
+- aggiungere `.next` agli ignore.
 
 Criteri:
 
@@ -390,7 +423,35 @@ Criteri:
 
 ---
 
-### Milestone 2 — Backend foundation
+### Milestone 2 — Workspace foundations
+
+Obiettivo: rendere reali i workspace senza introdurre dominio.
+
+Stato: in corso.
+
+Task:
+
+- creare `package.json` per `apps/api`;
+- creare `package.json` per `apps/web`;
+- creare `package.json` per `packages/shared`;
+- aggiungere `tsconfig.json` minimi per ogni workspace;
+- rendere `apps/api` compilabile con TypeScript;
+- rendere `packages/shared` compilabile con TypeScript;
+- rendere `apps/web` compilabile con Next.js;
+- allineare script `build`, `lint`, `dev`, `test`, `format`.
+
+Criteri:
+
+- `pnpm build` funzionante;
+- `pnpm lint` funzionante;
+- `pnpm format:check` funzionante;
+- nessuna feature di dominio;
+- nessun database;
+- nessuna auth.
+
+---
+
+### Milestone 3 — Backend foundation
 
 Obiettivo: creare backend NestJS + Fastify.
 
@@ -416,7 +477,7 @@ Criteri:
 
 ---
 
-### Milestone 3 — Database foundation
+### Milestone 4 — Database foundation
 
 Obiettivo: collegare PostgreSQL e Prisma.
 
@@ -440,15 +501,15 @@ Criteri:
 
 ---
 
-### Milestone 4 — Frontend foundation
+### Milestone 5 — Frontend foundation
 
-Obiettivo: creare frontend React + Vite + TypeScript.
+Obiettivo: stabilizzare frontend Next.js + React + TypeScript.
 
 Task:
 
-- creare app React in `apps/web`;
-- configurare React Router;
-- configurare Tailwind CSS;
+- mantenere `apps/web` come app Next.js;
+- usare App Router;
+- mantenere Tailwind CSS;
 - impostare struttura feature-based;
 - aggiungere layout base;
 - creare pagine iniziali.
@@ -458,11 +519,11 @@ Criteri:
 - app avviabile;
 - build funzionante;
 - lint funzionante;
-- routing funzionante.
+- routing Next.js funzionante.
 
 ---
 
-### Milestone 5 — Authentication
+### Milestone 6 — Authentication
 
 Obiettivo: implementare auth sicura.
 
@@ -492,7 +553,7 @@ Regole:
 
 ---
 
-### Milestone 6 — Dominio finanziario base
+### Milestone 7 — Dominio finanziario base
 
 Obiettivo: implementare conti e transazioni.
 
@@ -2264,7 +2325,7 @@ apps/web/src/
 Le chiamate fetch autenticate devono usare:
 
 ```ts
-credentials: 'include'
+credentials: 'include';
 ```
 
 ---
