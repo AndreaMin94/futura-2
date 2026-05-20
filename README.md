@@ -22,6 +22,7 @@ Al momento la repository contiene:
 - configurazione API minima tramite `API_PORT`;
 - endpoint `GET /health`;
 - PostgreSQL locale via Docker Compose;
+- Prisma foundation e DatabaseModule;
 - frontend scaffoldato con Next.js;
 - Prettier configurato a livello root.
 
@@ -29,8 +30,8 @@ Non sono ancora presenti:
 
 - funzionalità applicative di dominio;
 - autenticazione;
-- integrazione database nell'API;
-- Prisma;
+- modelli Prisma di dominio;
+- migration database;
 - integrazione tra frontend e backend.
 
 ## Stack attuale
@@ -39,6 +40,7 @@ Non sono ancora presenti:
 - TypeScript
 - NestJS con Fastify adapter per `apps/api`
 - PostgreSQL locale via Docker Compose
+- Prisma
 - Next.js per `apps/web`
 - React
 - Tailwind CSS
@@ -96,6 +98,7 @@ La prima primitiva disponibile è `Money`:
 futura/
   apps/
     api/
+      prisma/
       src/
       package.json
       tsconfig.json

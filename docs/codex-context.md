@@ -85,6 +85,8 @@ Stato attuale:
 - endpoint `GET /health`;
 - PostgreSQL locale configurato via Docker Compose;
 - Docker Compose project name: `futura`;
+- Prisma foundation configurata in `apps/api`;
+- DatabaseModule e PrismaService presenti in `apps/api`;
 - foundation TypeScript minima per `packages/shared`;
 - money value object condiviso in `@futura/shared`;
 - frontend scaffoldato con Next.js in `apps/web`;
@@ -113,6 +115,8 @@ pnpm-lock.yaml
 .prettierignore
 .env.example
 Docker/docker-compose.yml
+apps/api/prisma/schema.prisma
+apps/api/prisma.config.ts
 tsconfig.base.json
 docs/codex-context.md
 ```
@@ -123,6 +127,7 @@ Struttura monorepo target:
 futura/
   apps/
     api/
+      prisma/
       src/
       package.json
       tsconfig.json
@@ -508,18 +513,20 @@ Task completati:
 - usare database locale `futura`;
 - impostare Docker Compose project name `futura`;
 - aggiungere `.env.example`;
+- configurare Prisma foundation;
+- creare `DatabaseModule`;
+- creare `PrismaService`;
 
 Task ancora da fare:
 
-- configurare Prisma;
-- creare `PrismaService`;
+- definire i modelli Prisma di dominio;
 - preparare prima migration.
 
 Criteri:
 
 - database avviabile via Docker;
-- Prisma configurato quando verrà introdotto;
-- client generabile quando Prisma verrà introdotto;
+- Prisma configurato;
+- client generabile;
 - connessione testata quando l'API avrà un layer database;
 - `.env` non committato.
 
