@@ -8,7 +8,7 @@
     "build": "pnpm -r --if-present build",
     "lint": "pnpm -r --if-present lint",
     "test": "pnpm -r --if-present test",
-    "check": "pnpm --filter @futura/shared test && pnpm --filter @futura/shared build && pnpm test && pnpm build && pnpm lint && pnpm format:check",
+    "check": "pnpm test && pnpm build && pnpm lint && pnpm format:check",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
