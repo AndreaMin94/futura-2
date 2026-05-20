@@ -66,3 +66,21 @@ jobs:
       # con PostgreSQL service, Prisma generate e Prisma migrate deploy.
       - name: Run project checks
         run: pnpm check
+
+      # Stampa le versioni effettive usate dalla VM di CI.
+      # Serve per fare debug rapido se un errore dipende da Node.js o pnpm.
+      - name: Print tool versions
+        run: |
+          node --version
+          pnpm --version
+
+      # Mostra quali package pnpm vede dentro il monorepo.
+      # E' un controllo leggero utile per intercettare problemi di workspace.
+      - name: List workspace packages
+        run: pnpm list -r --depth -1
+
+      # Controlla vulnerabilita' note nelle dipendenze.
+      # Per ora non blocca la pipeline: segnala problemi, ma lascia proseguire la CI.
+      - name: Audit dependencies
+        run: pnpm audit --audit-level high
+        continue-on-error: true
