@@ -17,12 +17,13 @@ Al momento la repository contiene:
 - workspace `apps/web`;
 - workspace `packages/shared`;
 - configurazione TypeScript condivisa;
+- money value object condiviso in `@futura/shared`;
 - frontend scaffoldato con Next.js;
 - Prettier configurato a livello root.
 
 Non sono ancora presenti:
 
-- dominio applicativo;
+- funzionalità applicative di dominio;
 - autenticazione;
 - database;
 - Prisma;
@@ -38,6 +39,18 @@ Non sono ancora presenti:
 - React
 - Tailwind CSS
 - Prettier
+
+## Dominio condiviso
+
+Il package `@futura/shared` contiene le primitive di dominio che devono restare coerenti tra backend e frontend.
+
+La prima primitiva disponibile è `Money`:
+
+- gli importi sono rappresentati in minor units, ad esempio `12,34 EUR -> 1234`;
+- il runtime TypeScript usa `bigint` per evitare errori floating point;
+- i payload JSON usano stringhe per `amountMinor`, perché JSON non supporta `bigint`;
+- le valute attualmente supportate sono `EUR`, `GBP` e `USD`;
+- non sono previste conversioni tra valute senza un tasso esplicito.
 
 ## Stack previsto
 

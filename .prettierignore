@@ -3,6 +3,7 @@ dist
 build
 coverage
 .next
+apps/web/next-env.d.ts
 .pnpm-store
 .turbo
 .vite

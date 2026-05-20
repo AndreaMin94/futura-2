@@ -82,6 +82,7 @@ Stato attuale:
 - configurazione TypeScript condivisa tramite `tsconfig.base.json`;
 - foundation TypeScript minima per `apps/api`;
 - foundation TypeScript minima per `packages/shared`;
+- money value object condiviso in `@futura/shared`;
 - frontend scaffoldato con Next.js in `apps/web`;
 - Prettier configurato a livello root;
 - README aggiornato con setup locale e stato del progetto.
@@ -230,7 +231,7 @@ Preferenza tecnica:
 
 ```txt
 amountMinor: BigInt
-currency: EUR
+currency: EUR | GBP | USD
 ```
 
 Esempio:
@@ -244,6 +245,14 @@ Motivazione:
 - evitare errori floating point;
 - mantenere coerenza nei calcoli;
 - semplificare aggregazioni e report.
+
+Regole attuali:
+
+- il runtime TypeScript usa `bigint`;
+- i payload JSON usano stringhe per `amountMinor`, perché JSON non supporta `bigint`;
+- backend e frontend devono condividere la stessa rappresentazione tramite `@futura/shared`;
+- `parseMoney` deve validare i dati JSON esterni prima di usarli come dati di dominio;
+- non fare conversioni tra valute senza un tasso di cambio esplicito.
 
 Ogni eventuale semplificazione con `number`/`Float` deve essere esplicitamente motivata e documentata.
 
