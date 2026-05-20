@@ -3,16 +3,15 @@ import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fa
 import 'reflect-metadata';
 
 import { AppModule } from './app.module.js';
-
-const defaultPort = 3000;
+import { getAppConfig } from './app.config.js';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
-  const port = Number(process.env.API_PORT ?? defaultPort);
+  const { apiPort } = getAppConfig();
 
   await app.listen({
-    port,
+    port: apiPort,
     host: '0.0.0.0',
   });
 }
