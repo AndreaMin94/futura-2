@@ -2,11 +2,13 @@ export const currencies = ['EUR', 'GBP', 'USD'] as const;
 
 export type Currency = (typeof currencies)[number];
 
+// Money is stored in minor units to avoid floating-point errors in financial calculations.
 export type Money = {
   amountMinor: bigint;
   currency: Currency;
 };
 
+// JSON cannot transport bigint values, so API payloads use strings for amountMinor.
 export type SerializedMoney = {
   amountMinor: string;
   currency: string;
@@ -41,6 +43,7 @@ export function serializeMoney(money: Money): SerializedMoney {
   };
 }
 
+// Parse and validate money received from external JSON before using it as trusted domain data.
 export function parseMoney(input: SerializedMoney): Money {
   if (!/^-?\d+$/.test(input.amountMinor)) {
     throw new Error('Money amountMinor must be an integer string.');
