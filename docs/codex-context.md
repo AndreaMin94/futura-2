@@ -81,6 +81,7 @@ Stato attuale:
 - workspace `packages/shared` creato;
 - configurazione TypeScript condivisa tramite `tsconfig.base.json`;
 - API foundation con NestJS e Fastify adapter in `apps/api`;
+- configurazione API minima tramite `API_PORT`;
 - endpoint `GET /health`;
 - foundation TypeScript minima per `packages/shared`;
 - money value object condiviso in `@futura/shared`;
@@ -108,6 +109,7 @@ pnpm-lock.yaml
 .gitignore
 .prettierrc
 .prettierignore
+.env.example
 tsconfig.base.json
 docs/codex-context.md
 ```
@@ -121,6 +123,7 @@ futura/
       src/
       package.json
       tsconfig.json
+      tsconfig.build.json
 
     web/
       src/
@@ -463,6 +466,8 @@ Task completati:
 - creare app NestJS in `apps/api`;
 - configurare Fastify;
 - configurare TypeScript;
+- aggiungere config API minima tramite `API_PORT`;
+- aggiungere `.env.example` senza segreti;
 - aggiungere endpoint health;
 - configurare build;
 - configurare test;
